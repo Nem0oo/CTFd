@@ -1,0 +1,30 @@
+services:
+  ctfd:
+    ports: !override
+      []
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import sys,urllib.request; sys.exit(0 if 200<=urllib.request.urlopen('http://127.0.0.1:8000/healthcheck',timeout=5).getcode()==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    environment:
+      - VIRTUAL_HOST=ctf.gcourtot.fr
+      - LETSENCRYPT_HOST=ctf.gcourtot.fr
+      - VIRTUAL_PORT=8000
+    networks: !override
+      internal:
+      frontend:
+  nginx: !override
+    image: busybox
+    command: ["true"]
+    restart: "no"
+    depends_on: []
+    networks: !override
+      internal:
+
+networks: !override
+    internal:
+      internal: true
+    frontend:
+      name: reseau_interne
+      external: true
