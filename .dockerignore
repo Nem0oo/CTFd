@@ -17,3 +17,6 @@ CTFd/uploads/**/*
 **/__pycache__
 .venv*
 venv*
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
