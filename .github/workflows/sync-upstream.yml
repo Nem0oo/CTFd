@@ -42,3 +42,9 @@ jobs:
           fi
 
           git push origin master
+      - name: Trigger CI workflow
+        run: |
+          gh workflow run build.yml --ref master --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
