@@ -15,13 +15,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 0
-
-      - name: Configure git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Add upstream remote
         run: git remote add upstream https://github.com/CTFd/CTFd.git
@@ -31,6 +26,8 @@ jobs:
 
       - name: Merge upstream changes
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout master
           git merge --strategy=recursive --strategy-option=theirs upstream/master || true
           # Restaure ton .github tel qu'il est dans ta branche (évite l'écrasement)
